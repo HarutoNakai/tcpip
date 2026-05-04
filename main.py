@@ -1,3 +1,22 @@
+# =====================================================================
+#  Project: Toy TCP/IP Stack from Scratch
+#  File: main.py
+#  Author: Haruto Nakai
+#  Date: 2026-05-04
+#
+#  Description:
+#    LinuxのTAPデバイス(L2)を利用し、Pythonでゼロから構築した
+#    ネットワークプロトコルスタックです。
+#
+#  Supported Protocols:
+#    - Layer 2: Ethernet, ARP (Request/Reply)
+#    - Layer 3: IPv4, ICMP (Echo Reply / Ping response)
+#
+#  Usage:
+#    sudo python3 main.py
+# =====================================================================
+
+
 import os
 import struct
 import fcntl
