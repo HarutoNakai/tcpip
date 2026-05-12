@@ -15,10 +15,17 @@
 #    - Layer 4: TCP (3-way handshake, PSH/ACK flow)
 #    - Layer 7: HTTP (Basic GET Response)
 #
-#  Usage:
-#    sudo python3 main.py
+#  Usage (WSL環境で起動し、Windowsのブラウザからアクセスする手順):
+#    1. [ターミナルA] WSLとWindowsを繋ぐ中継トンネルを開通させる
+#       $ sudo apt install socat  # (初回のみインストール)
+#       $ sudo socat TCP-LISTEN:8080,fork,reuseaddr TCP:192.168.0.2:80
+#
+#    2. [ターミナルB] 別のタブを開き、自作TCP/IPスタックを起動する
+#       $ sudo python3 main.py
+#
+#    3. [Windows側のブラウザ] Chromeなどを開き、以下へアクセス！
+#       http://localhost:8080
 # =====================================================================
-
 
 import os
 import struct
@@ -264,7 +271,7 @@ def tcp(pac):
 
             # 1. 送り返すWebページ（HTTPレスポンス）の作成
             # HTTPのルール：「ヘッダ」と「ボディ」の間は必ず改行2つ(\r\n\r\n)空ける！
-            http_body = "<html><body><h1>Hello TCP/IP! You are Success!</h1></body></html>"
+            http_body = "<html><body><h1>Hello This is haruto! You are Success!</h1></body></html>"
             http_response = f"HTTP/1.1 200 OK\r\nContent-Length: {len(http_body)}\r\n\r\n{http_body}"
             reply_payload = http_response.encode('utf-8')
 
