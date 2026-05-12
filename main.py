@@ -269,10 +269,71 @@ def tcp(pac):
             # ==== ▼ここから追加！ブラウザにWebページを返信しよう！▼ ====
             print("Webページを生成して返信します！🌍")
 
-            # 1. 送り返すWebページ（HTTPレスポンス）の作成
-            # HTTPのルール：「ヘッダ」と「ボディ」の間は必ず改行2つ(\r\n\r\n)空ける！
-            http_body = "<html><body><h1>Hello This is haruto! You are Success!</h1></body></html>"
-            http_response = f"HTTP/1.1 200 OK\r\nContent-Length: {len(http_body)}\r\n\r\n{http_body}"
+            # 1. 送り返すWebページ（ハッカー風ダークテーマ ＋ CSSアニメーション）
+            http_body = """<!DOCTYPE html>
+            <html lang="ja">
+            <head>
+                <meta charset="UTF-8">
+                <title>Toy TCP/IP Kernel</title>
+                <style>
+                    body {
+                        background-color: #050505;
+                        color: #00ff00;
+                        font-family: 'Courier New', monospace;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        height: 100vh;
+                        margin: 0;
+                        overflow: hidden;
+                    }
+                    h1 {
+                        font-size: 3rem;
+                        text-shadow: 0 0 10px #00ff00;
+                        animation: pulse 1.5s infinite alternate;
+                    }
+                    @keyframes pulse {
+                        0% { opacity: 0.8; text-shadow: 0 0 5px #00ff00; }
+                        100% { opacity: 1; text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
+                    }
+                    .dashboard {
+                        background: rgba(0, 255, 0, 0.05);
+                        padding: 30px;
+                        border: 1px solid #005500;
+                        border-radius: 8px;
+                        box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+                    }
+                    .line {
+                        margin: 10px 0;
+                        border-bottom: 1px dashed #005500;
+                        padding-bottom: 5px;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>⚡ SYSTEM ONLINE</h1>
+                <div class="dashboard">
+                    <div class="line">> L2 : Ethernet (TAP Device) [OK]</div>
+                    <div class="line">> L3 : IPv4 / ICMP [OK]</div>
+                    <div class="line">> L4 : TCP (3-way handshake) [OK]</div>
+                    <div class="line">> L7 : HTTP Server [OK]</div>
+                    <br>
+                    <div style="color: #fff">> Welcome to Haruto's Custom Kernel.</div>
+                </div>
+            </body>
+            </html>"""
+
+            # 2. HTTPレスポンスヘッダ
+            # 遊び心で「Server: DJANGO-Custom-Kernel/1.0」というオレオレヘッダを追加！
+            http_response = (
+                f"HTTP/1.1 200 OK\r\n"
+                f"Server: DJANGO-Custom-Kernel/1.0\r\n"
+                f"Content-Type: text/html; charset=UTF-8\r\n"
+                f"Content-Length: {len(http_body.encode('utf-8'))}\r\n"
+                f"Connection: close\r\n\r\n"
+                f"{http_body}"
+            )
             reply_payload = http_response.encode('utf-8')
 
             # 2. シーケンス番号とACK番号の計算（TCP最大のパズル🧩）
